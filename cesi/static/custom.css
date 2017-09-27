@@ -294,3 +294,17 @@
     font-size: 12px;
   }
 }
+
+.modal-dialog {
+  width: 95vw;
+  height: 90vh;
+}
+
+.modal-content {
+  height: 93vh;
+}
+
+.modal-content .scroll{
+  height: 82vh;
+  overflow-y: scroll;
+}

@@ -411,7 +411,7 @@ var $buttonactions = function(){
     });
 };
 
-var $selectgroupenv = function(){
+/*var $selectgroupenv = function(){
     $(".activity-log").remove();
     var $usertype = $(this).attr('usertype');
     console.log($usertype);
@@ -847,7 +847,7 @@ var $selectgroupenv = function(){
             });
         }
     }    
-}
+}*/
 
 var $selectnode = function(){
     $(".activity-log").remove();
@@ -1074,7 +1074,19 @@ var $selectnode = function(){
                                 dataType: 'json',
                                 success: function(log){
                                     if (log['status']=="success"){
-                                        $dia.html('<pre>'+log['log']+'</pre>');
+                                        var log = log['log'];
+                                        var err = log['errlog'];
+
+                                        $('#stdout').html(log);
+                                        $('#stderr').html(err);
+
+                                        $('#readlog').modal('show')
+
+                                        $('#readlog').on('hidden.bs.modal', function (e) {
+                                            $('#stdout').html('');
+                                            $('#stderr').html('');
+                                        })
+                                        /*$dia.html('<pre>'+log['log']+'</pre>');
                                         $dia.dialog({
                                             open: function(){
                                                 timer = setInterval(function () {
@@ -1112,7 +1124,7 @@ var $selectnode = function(){
                                         }).draggable({
                                             containment: "#page-wrapper",
                                             opacity: 0.70
-                                        });
+                                        });*/
                                     }else{
                                         noty({
                                             timeout: 5000,
@@ -1252,7 +1264,7 @@ $( document ).ready(function() {
     $(".adduser").click($adduser);
     $(".deluser").click($showdeluserpage);
     $(".changepassword").click($changepassword);
-    $(".ajax3").click($selectgroupenv);
+    //$(".ajax3").click($selectgroupenv);
 
         $.ajax({
             url: "/activitylog",

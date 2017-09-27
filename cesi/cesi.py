@@ -36,22 +36,22 @@ class Config:
         if 'node' in etcd_nodes.keys() and 'nodes' in etcd_nodes['node'].keys():
             for spvs in etcd_nodes['node']['nodes']:
                 if 'nodes' in spvs.keys():
+                    hostname = None
+                    name = None
+                    port = None
                     for data_node in spvs['nodes']:
-                        hostname = None
-                        name = None
-                        port = None
-                        if data_node['key'].endswith('name'):
+                        
+                        if data_node['key'].endswith('/name'):
                             name = data_node['value']
 
-                        if data_node['key'].endswith('hostname'):
+                        if data_node['key'].endswith('/hostname'):
                             hostname = data_node['value']
 
-                        if data_node['key'].endswith('port'):
+                        if data_node['key'].endswith('/port'):
                             port = data_node['value']
-
-                        if hostname is not None and name is not None:
-                            self.etcd_nodes[name] = NodeConfig(name, hostname, port, '', '' )
-                            self.node_list.append(name)
+                    if hostname is not None and name is not None and port is not None:
+                        self.etcd_nodes[name] = NodeConfig(name, hostname, port, '', '' )
+                        self.node_list.append(name)
 
     def getNodeConfig(self, node_name):
         self.node_name = "node:%s" % (node_name)
@@ -62,8 +62,8 @@ class Config:
             self.host = self.cfg.get(self.node_name, 'host')
             self.port = self.cfg.get(self.node_name, 'port')
             self.node_config = NodeConfig(self.node_name, self.host, self.port, self.username, self.password)
-        elif self.node_name in self.etcd_nodes:
-            self.node_config = self.etcd_nodes[self.node_name]
+        elif node_name in self.etcd_nodes:
+            self.node_config = self.etcd_nodes[node_name]
 
         return self.node_config
 
