@@ -11,6 +11,7 @@ setup(
   author='Gulsah Kose',
   author_email='gulsah.1004@gmail.com',
   install_requires=[
+    "werkzeug<1.0",
     "Flask==0.10.1",
     "requests"
   ],
